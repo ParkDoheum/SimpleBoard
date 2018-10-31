@@ -11,9 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 public class CommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("--------- comment [GET] -------");
+
+		//댓글 삭제 (board_no, comment_no)
+		String board_no = request.getParameter("board_no");
+		String comment_no = request.getParameter("comment_no");
+		
+		System.out.println("board_no : " + board_no);
+		System.out.println("comment_no : " + comment_no);
+		
+		int intBoardNO = Integer.parseInt(board_no);
+		int intCommentNo = Integer.parseInt(comment_no);
+		
+		BoardDAO.deleteComment(intBoardNO, intCommentNo);
+		
+		response.sendRedirect("detail?board_no=" + board_no);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,9 +46,6 @@ public class CommentServlet extends HttpServlet {
 		
 		response.sendRedirect("detail?board_no=" + board_no);
 	}
-	
-	
-
 }
 
 

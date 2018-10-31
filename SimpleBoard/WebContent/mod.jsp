@@ -30,15 +30,11 @@
 		return true;
 	}
 </script>
-<form name="frm" action="write" method="post" onsubmit="return chkSubmit()">
-	게시글번호(자동발생) : <input type="text" name="board_no" value="${board_no}"><br>
-	제목 : <input type="text" name="board_title" value=""><br>
-	내용 <textarea name="board_content" rows="10" cols="10"></textarea><br>
-	날짜 : <input type="text" name="regdate" value=""><br>
-	<input type="submit" value="등록">
+<form name="frm" action="mod" method="post" onsubmit="return chkSubmit()">
+	게시글번호: <input type="text" name="board_no" value="${vo.board_no}"><br>
+	제목 : <input type="text" name="board_title" value="${vo.board_title}"><br>
+	내용 <textarea name="board_content" rows="10" cols="10">${vo.board_content }</textarea><br>
+	날짜 : <input type="text" name="regdate" value="${vo.regdate}"><br>
+	<input type="submit" value="수정">
 	<input type="button" value="조회">
 </form>
-
-
-
-

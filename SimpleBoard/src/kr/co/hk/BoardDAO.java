@@ -183,6 +183,51 @@ public class BoardDAO {
 		return result;
 	}
 	
+	//글삭제
+	public static void  deleteBoard(int board_no) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = " DELETE FROM S_BOARD WHERE board_no = ? ";
+		try {			
+			con = DBConn.getConnction();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, board_no);
+			ps.executeUpdate();			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(con, ps, null);
+		}
+	}
+	
+	public static int updateBoard(BoardVO vo) {
+		int result = -1;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = " UPDATE S_BOARD "
+				+ " SET board_title = ? "
+				+ " , board_content = ? "
+				+ " , regdate = ? "
+				+ " WHERE board_no = ? ";
+		try {			
+			con = DBConn.getConnction();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, vo.getBoard_title());
+			ps.setString(2,  vo.getBoard_content());
+			ps.setString(3,  vo.getRegdate());
+			ps.setInt(4, vo.getBoard_no());
+			
+			result = ps.executeUpdate();			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(con, ps, null);
+		}
+		
+		return result;
+	}
+	
 	//댓글 달기
 	public static int insertComment(CommentVO vo) {
 		int result = -1;
@@ -251,6 +296,33 @@ public class BoardDAO {
 		
 		return list;
 	}
+	
+	//댓글 삭제 (1개 삭제 ,게시글 댓글 삭제)
+	public static void deleteComment(int board_no, int comment_no) {		
+		Connection con = null;
+		PreparedStatement ps = null;		
+		String sql = " DELETE FROM S_COMMENT"
+				+ " WHERE board_no = ? ";
+		
+		if(comment_no > 0) {
+			sql += " and comment_no = " + comment_no;
+		}
+		
+		try {
+			con = DBConn.getConnction();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, board_no);			
+			ps.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(con, ps, null);
+		}
+	}
+	
+
+	
 }
 
 

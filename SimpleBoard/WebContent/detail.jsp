@@ -10,6 +10,13 @@
 <div>
 	${vo.board_content}
 </div>
+<form action="detail" method="post">
+	<input type="hidden" name="board_no" value="${vo.board_no}">
+	<input type="hidden" name="type" value="del">
+	<input type="submit" value="삭제">
+</form>
+<a href="mod?board_no=${vo.board_no}"><input type="button" value="수정"></a>
+
 <br><br>
 <div>
 	<form action="comment" method="post">
@@ -34,7 +41,11 @@
 				<td><%=vo.getComment_no() %></td>
 				<td><%=vo.getComment_content() %></td>
 				<td><%=vo.getRegdate() %></td>
-				<td><button>삭제</button></td>
+				<td>
+					<a href="comment?board_no=${vo.board_no}&comment_no=<%=vo.getComment_no()%>">
+						<button>삭제</button>
+					</a>
+				</td>
 			</tr>		
 		<% } %>
 				

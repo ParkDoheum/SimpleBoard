@@ -29,14 +29,29 @@ public class DetailServlet extends HttpServlet {
 		Utils.dispatcher("디테일", "detail", request, response);
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//조회수 올리기
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		System.out.println("------------ detail [POST] -------");
+		
+		String type = request.getParameter("type");
+		
 		String board_no = request.getParameter("board_no");
 		System.out.println("board_no : " + board_no);
 		int intBoardNo = Integer.parseInt(board_no);
-		BoardDAO.boardUpdateCnt(intBoardNo);		
-		response.sendRedirect("detail?board_no=" + board_no);
+		
+		if(type == null) {//조회수 올리기
+			
+			BoardDAO.boardUpdateCnt(intBoardNo);		
+			response.sendRedirect("detail?board_no=" + board_no);
+			
+		} else if(type.equals("del")) {//글삭제
+			//댓글 삭제
+			BoardDAO.deleteComment(intBoardNo, 0);
+			
+			//글 삭제
+			BoardDAO.deleteBoard(intBoardNo);
+			
+			response.sendRedirect("list");
+		}
 	}
 }
 
