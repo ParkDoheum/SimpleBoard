@@ -1,6 +1,8 @@
 package kr.co.hk;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,12 +18,12 @@ public class ListServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//TODO 리스트내용
-		request.setAttribute("list", null);		
+		List<BoardVO> list = BoardDAO.getBoardList();
+		request.setAttribute("list", list);		
 		Utils.dispatcher("보드 리스트", "list", request, response);
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
+	}	
 }
+
+
+
+
